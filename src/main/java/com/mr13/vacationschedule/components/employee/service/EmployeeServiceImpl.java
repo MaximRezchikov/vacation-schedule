@@ -3,9 +3,12 @@ package com.mr13.vacationschedule.components.employee.service;
 import com.mr13.vacationschedule.components.employee.domain.Employee;
 import com.mr13.vacationschedule.components.employee.dto.EmployeeForm;
 import com.mr13.vacationschedule.components.employee.repo.EmployeeRepository;
+import com.mr13.vacationschedule.core.errors.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,27 +18,70 @@ public class EmployeeServiceImpl implements EmployeeService {
   private final EmployeeRepository employeeRepository;
 
   @Override
+  @Transactional
   public Employee save(EmployeeForm employeeForm) {
-    return null;
+
+    String username = employeeForm.getUsername();
+    LocalDate birthday = employeeForm.getBirthday();
+    Long personnelNumber = employeeForm.getPersonnelNumber();
+    String post = employeeForm.getPost();
+    LocalDate startDate = employeeForm.getStartDate();
+
+    Employee employee = Employee.builder()
+        .username(username)
+        .birthday(birthday)
+        .personnelNumber(personnelNumber)
+        .post(post)
+        .startDate(startDate)
+        .build();
+
+    return employeeRepository.save(employee);
   }
 
   @Override
+  @Transactional
   public Employee getOne(Long employeeId) {
-    return null;
+    return employeeRepository.findById(employeeId)
+        .orElseThrow(NotFoundException::new);
   }
 
   @Override
+  @Transactional
   public Employee update(Long employeeId, EmployeeForm employeeForm) {
-    return null;
+
+    String username = employeeForm.getUsername();
+    LocalDate birthday = employeeForm.getBirthday();
+    Long personnelNumber = employeeForm.getPersonnelNumber();
+    String post = employeeForm.getPost();
+    LocalDate startDate = employeeForm.getStartDate();
+
+    boolean exists = employeeRepository.existsById(employeeId);
+
+    if (exists) {
+      Employee employeeToUpdate = getOne(employeeId);
+
+      employeeToUpdate.setUsername(username);
+      employeeToUpdate.setBirthday(birthday);
+      employeeToUpdate.setPersonnelNumber(personnelNumber);
+      employeeToUpdate.setPost(post);
+      employeeToUpdate.setStartDate(startDate);
+
+      return employeeRepository.save(employeeToUpdate);
+    }
+    else {
+      throw new NotFoundException();
+    }
   }
 
   @Override
+  @Transactional
   public List<Employee> getAll() {
-    return null;
+    return employeeRepository.findAll();
   }
 
   @Override
+  @Transactional
   public void delete(Long employeeId) {
-
+    employeeRepository.deleteById(employeeId);
   }
 }
