@@ -1,5 +1,6 @@
 package com.mr13.vacationschedule.components.employee.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mr13.vacationschedule.components.vacation.domain.Vacation;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -37,14 +39,21 @@ public class Employee {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   private String username;
 
+  @Column(nullable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
   private LocalDate birthday;
 
+  @Column(nullable = false)
   private Long personnelNumber;
 
+  @Column(nullable = false)
   private String post;
 
+  @Column(nullable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
   private LocalDate startDate;
 
   @Column(unique = true)
