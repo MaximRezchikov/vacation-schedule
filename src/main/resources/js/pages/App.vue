@@ -29,6 +29,13 @@
               Employee List
             </v-btn>
           </v-list-item-title>
+          <v-list-item-title>
+            <v-btn text
+                   :disabled="$route.path === '/vacations'"
+                   @click="showVacationList">
+              Employee List
+            </v-btn>
+          </v-list-item-title>
         </v-list>
 
       </v-menu>
@@ -49,6 +56,9 @@
       },
       showEmployeeList() {
         this.$router.push('/employees')
+      },
+      showVacationList() {
+        this.$router.push('/vacations')
       }
     }
   }

@@ -105,8 +105,6 @@
       }
     },
 
-    //url: "/employeeProfile",
-
     computed: {
       formTitle() {
         return this.editedIndex === -1 ? 'New employee' : 'Edit employee data'
