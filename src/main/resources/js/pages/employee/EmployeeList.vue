@@ -21,6 +21,9 @@
         mdi-delete
       </v-icon>
     </template>
+    <template v-slot:item.username="{item}">
+      <v-btn color="blue darken-1" text @click="showEmployeeForm(item.id)">{{item.username}}</v-btn>
+    </template>
     <template v-slot:top>
       <v-toolbar flat color="white">
         <v-toolbar-title>Employee List</v-toolbar-title>
@@ -45,7 +48,7 @@
                   <v-text-field v-model="editedItem.username" label="Employee name"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.birthday" label="Birthday"></v-text-field>
+                  <v-text-field v-model="editedItem.birthday" label="Birthday" placeholder="DD.MM.YYYY"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field v-model="editedItem.personnelNumber" label="Personnel Number"></v-text-field>
@@ -54,7 +57,8 @@
                   <v-text-field v-model="editedItem.post" label="Post"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.startDate" label="Work Start Date"></v-text-field>
+                  <v-text-field v-model="editedItem.startDate" label="Work Start Date"
+                                placeholder="DD.MM.YYYY"></v-text-field>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -82,7 +86,7 @@
       return {
         dialog: false,
         headers: [
-          {text: 'Employee name', value: 'username'},
+          {text: 'Employee name', value: 'username' },
           {text: 'Birthday', value: 'birthday'},
           {text: 'Personnel Number', value: 'personnelNumber'},
           {text: 'Post', value: 'post'},
@@ -96,18 +100,21 @@
         },
         editedItem: {
           username: ''
-        }
+        },
+        id: ''
       }
     },
 
+    //url: "/employeeProfile",
+
     computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New employee' : 'Edit Item'
+      formTitle() {
+        return this.editedIndex === -1 ? 'New employee' : 'Edit employee data'
       },
     },
 
     watch: {
-      dialog (val) {
+      dialog(val) {
         val || this.close()
       },
     },
@@ -176,11 +183,15 @@
         this.close()
       },
 
-      editItem (item) {
+      editItem(item) {
         this.editedIndex = this.employeeList.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
+      showEmployeeForm(id) {
+        this.$router.push('/employeeCard/' + id)
+        //EmployeeCard.mounted(id)
+      }
     }
   }
 </script>

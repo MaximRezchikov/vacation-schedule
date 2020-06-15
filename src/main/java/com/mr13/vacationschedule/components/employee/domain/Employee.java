@@ -17,13 +17,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
+
+import static com.mr13.vacationschedule.core.constants.StringConstants.TIME_FORMAT;
 
 @Data
 @Entity
@@ -43,7 +42,7 @@ public class Employee {
   private String username;
 
   @Column(nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
   private LocalDate birthday;
 
   @Column(nullable = false)
@@ -53,7 +52,7 @@ public class Employee {
   private String post;
 
   @Column(nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
   private LocalDate startDate;
 
   @Column(unique = true)
@@ -61,10 +60,12 @@ public class Employee {
 
   private String password;
 
-  @JsonIgnore
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @JoinTable(name = "employee_vacation",
-      joinColumns = @JoinColumn(name = "emplyee_id"),
-      inverseJoinColumns = @JoinColumn(name = "vacation_id"))
+  //@JsonIgnore
+  @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<Vacation> vacations;
+
+  @JsonIgnore
+  public boolean addVacation(Vacation vacation) {
+    return vacations.add(vacation);
+  }
 }

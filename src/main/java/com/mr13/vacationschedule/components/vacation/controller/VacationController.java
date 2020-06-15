@@ -37,11 +37,11 @@ public class VacationController {
     return vacationService.getAll();
   }
 
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public Vacation saveVacation(@Valid @RequestBody VacationForm vacationForm) {
-    return vacationService.save(vacationForm);
-  }
+//  @PostMapping
+//  @ResponseStatus(HttpStatus.CREATED)
+//  public Vacation saveVacation(@Valid @RequestBody VacationForm vacationForm) {
+//    return vacationService.save(vacationForm);
+//  }
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)

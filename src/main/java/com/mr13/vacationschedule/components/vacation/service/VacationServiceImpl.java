@@ -6,6 +6,7 @@ import com.mr13.vacationschedule.components.vacation.repo.VacationRepository;
 import com.mr13.vacationschedule.core.errors.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -18,13 +19,14 @@ public class VacationServiceImpl implements VacationService {
   private final VacationRepository vacationRepository;
 
   @Override
-  @Transactional
-  public Vacation save(VacationForm vacationForm) {
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  public Vacation save(Long emploeeId, VacationForm vacationForm) {
 
     LocalDate startVacation = vacationForm.getStartVacation();
     LocalDate endVacation = vacationForm.getEndVacation();
 
     Vacation vacation = Vacation.builder()
+        .employeeId(emploeeId)
         .startVacation(startVacation)
         .endVacation(endVacation)
         .build();
