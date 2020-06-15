@@ -2,8 +2,10 @@ package com.mr13.vacationschedule.components.employee.controller;
 
 import com.mr13.vacationschedule.components.employee.domain.Employee;
 import com.mr13.vacationschedule.components.employee.dto.EmployeeForm;
+import com.mr13.vacationschedule.components.employee.dto.EmployeeView;
 import com.mr13.vacationschedule.components.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.mr13.vacationschedule.core.constants.UrlConstant.EMPLOYEE_URL;
 
@@ -26,27 +29,43 @@ import static com.mr13.vacationschedule.core.constants.UrlConstant.EMPLOYEE_URL;
 public class EmployeeController {
 
   private final EmployeeService employeeService;
+  private final ConversionService converter;
 
   @GetMapping("/{id}")
-  public Employee getOne(@PathVariable("id") Long employeeId) {
-    return employeeService.getOne(employeeId);
+  public EmployeeView getOne(@PathVariable("id") Long employeeId) {
+
+    Employee employee = employeeService.getOne(employeeId);
+
+    return converter.convert(employee, EmployeeView.class);
   }
 
   @GetMapping
-  public List<Employee> getAll() {
-    return employeeService.getAll();
+  public List<EmployeeView> getAll() {
+
+    List<Employee> employeeList = employeeService.getAll();
+
+    return employeeList.stream()
+        .map(employee -> converter.convert(employee, EmployeeView.class))
+        .collect(Collectors.toList());
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Employee saveEmployee(@Valid @RequestBody EmployeeForm employeeForm) {
-    return employeeService.save(employeeForm);
+  public EmployeeView saveEmployee(@Valid @RequestBody EmployeeForm employeeForm) {
+
+    Employee employee = employeeService.save(employeeForm);
+
+    return converter.convert(employee, EmployeeView.class);
   }
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public Employee updateEmployee(@PathVariable("id") Long employeeId, @Valid @RequestBody EmployeeForm employeeForm) {
-    return employeeService.update(employeeId, employeeForm);
+  public EmployeeView updateEmployee(@PathVariable("id") Long employeeId,
+      @Valid @RequestBody EmployeeForm employeeForm) {
+
+    Employee employee = employeeService.update(employeeId, employeeForm);
+
+    return converter.convert(employee, EmployeeView.class);
   }
 
   @DeleteMapping("{id}")

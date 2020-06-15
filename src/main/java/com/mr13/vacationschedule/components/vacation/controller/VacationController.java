@@ -2,8 +2,10 @@ package com.mr13.vacationschedule.components.vacation.controller;
 
 import com.mr13.vacationschedule.components.vacation.domain.Vacation;
 import com.mr13.vacationschedule.components.vacation.dto.VacationForm;
+import com.mr13.vacationschedule.components.vacation.dto.VacationView;
 import com.mr13.vacationschedule.components.vacation.service.VacationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.mr13.vacationschedule.core.constants.UrlConstant.VACATION_URL;
 
@@ -26,27 +29,43 @@ import static com.mr13.vacationschedule.core.constants.UrlConstant.VACATION_URL;
 public class VacationController {
 
   private final VacationService vacationService;
+  private final ConversionService converter;
 
   @GetMapping("/{id}")
-  public Vacation getOne(@PathVariable("id") Long vacationId) {
-    return vacationService.getOne(vacationId);
+  public VacationView getOne(@PathVariable("id") Long vacationId) {
+
+    Vacation vacation = vacationService.getOne(vacationId);
+
+    return converter.convert(vacation, VacationView.class);
   }
 
   @GetMapping
-  public List<Vacation> getAll() {
-    return vacationService.getAll();
+  public List<VacationView> getAll() {
+
+    List<Vacation> vacationList = vacationService.getAll();
+
+    return vacationList.stream()
+        .map(vacation -> converter.convert(vacation, VacationView.class))
+        .collect(Collectors.toList());
   }
 
-//  @PostMapping
-//  @ResponseStatus(HttpStatus.CREATED)
-//  public Vacation saveVacation(@Valid @RequestBody VacationForm vacationForm) {
-//    return vacationService.save(vacationForm);
-//  }
+  @PostMapping("/{id}")
+  @ResponseStatus(HttpStatus.CREATED)
+  public VacationView saveVacation(@PathVariable("id") Long employeeId, @Valid @RequestBody VacationForm vacationForm) {
+
+    Vacation vacation = vacationService.save(employeeId, vacationForm);
+
+    return converter.convert(vacation, VacationView.class);
+  }
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public Vacation updateVacation(@PathVariable("id") Long vacationId, @Valid @RequestBody VacationForm vacationForm) {
-    return vacationService.update(vacationId, vacationForm);
+  public VacationView updateVacation(@PathVariable("id") Long vacationId,
+      @Valid @RequestBody VacationForm vacationForm) {
+
+    Vacation vacation = vacationService.update(vacationId, vacationForm);
+
+    return converter.convert(vacation, VacationView.class);
   }
 
   @DeleteMapping("{id}")
