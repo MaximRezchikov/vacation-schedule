@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.mr13.vacationschedule.core.constants.UrlConstant.EMPLOYEE_URL;
 import static com.mr13.vacationschedule.core.constants.UrlConstant.VACATION_URL;
 
 @RestController
@@ -47,6 +48,11 @@ public class VacationController {
     return vacationList.stream()
         .map(vacation -> converter.convert(vacation, VacationView.class))
         .collect(Collectors.toList());
+  }
+
+  @GetMapping(EMPLOYEE_URL + "/{employeeId}")
+  public List<Vacation> getVacationByEmployeeId(@PathVariable Long employeeId) {
+    return vacationService.getVacationsByEmployeeId(employeeId);
   }
 
   @PostMapping("/{id}")

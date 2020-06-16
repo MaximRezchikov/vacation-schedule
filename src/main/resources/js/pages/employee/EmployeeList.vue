@@ -161,6 +161,7 @@
             post: this.editedItem.post,
             startDate: this.editedItem.startDate
           });
+          location.reload();
         } else {
           axios.post('http://localhost:8080/employee', {
             username: this.editedItem.username,

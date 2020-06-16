@@ -70,6 +70,12 @@ public class VacationServiceImpl implements VacationService {
 
   @Override
   @Transactional
+  public List<Vacation> getVacationsByEmployeeId(Long employeeId) {
+    return vacationRepository.getVacationsByEmployeeId(employeeId);
+  }
+
+  @Override
+  @Transactional
   public void delete(Long vacationId) {
     vacationRepository.deleteById(vacationId);
   }

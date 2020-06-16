@@ -16,4 +16,6 @@ public interface VacationService {
   List<Vacation> getAll();
 
   void delete(Long vacationId);
+
+  List<Vacation> getVacationsByEmployeeId(Long employeeId);
 }
