@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
-import static com.mr13.vacationschedule.core.constants.StringConstants.TIME_FORMAT;
+import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORMAT;
 
 @Data
 @Entity
@@ -34,10 +34,10 @@ public class Vacation {
 
   private Long employeeId;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate startVacation;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate endVacation;
 
   @JsonIgnore

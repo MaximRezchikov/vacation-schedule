@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Set;
 
-import static com.mr13.vacationschedule.core.constants.StringConstants.TIME_FORMAT;
+import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORMAT;
 
 @Data
 @Entity
@@ -42,7 +42,7 @@ public class Employee {
   private String username;
 
   @Column(nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate birthday;
 
   @Column(nullable = false)
@@ -52,7 +52,7 @@ public class Employee {
   private String post;
 
   @Column(nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate startDate;
 
   @Column(unique = true)

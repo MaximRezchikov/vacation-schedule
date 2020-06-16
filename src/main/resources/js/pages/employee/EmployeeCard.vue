@@ -156,7 +156,6 @@
           });
           location.reload();
         } else {
-          let employeeId = this.id;
           axios.post('http://localhost:8080/vacation', {
             employeeId: this.id,
             startVacation: this.editedItem.startVacation,

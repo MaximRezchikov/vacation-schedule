@@ -6,15 +6,17 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
-import static com.mr13.vacationschedule.core.constants.StringConstants.TIME_FORMAT;
+import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORMAT;
 
 @Data
 public class EmployeeVacationView {
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  private Long id;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate startVacation;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate endVacation;
 
   private EmployeeView employee;

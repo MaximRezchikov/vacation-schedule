@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-import static com.mr13.vacationschedule.core.constants.StringConstants.TIME_FORMAT;
+import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORMAT;
 
 
 @Data
@@ -16,7 +16,7 @@ public class EmployeeForm {
   private String username;
 
   @NotNull
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate birthday;
 
   @NotNull
@@ -25,6 +25,6 @@ public class EmployeeForm {
   private String post;
 
   @NotNull
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate startDate;
 }
