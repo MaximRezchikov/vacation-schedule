@@ -128,15 +128,6 @@
         });
       },
 
-      getVacations(){
-        axios.get('http://localhost:8080/vacation/employee/' + this.id)
-        .then(result => {
-          this.vacationList = result.data
-        }, error => {
-          console.error(error);
-        });
-      },
-
       deleteVacation(item) {
         const index = this.vacations.indexOf(item);
         if (confirm('Are you sure you want to delete this vacation?') && this.vacations.splice(index, 1)) {
