@@ -7,6 +7,7 @@
     <v-data-table
         :headers="headers"
         :items="employee.vacations"
+        sort-by="startVacation"
         :items-per-page="10"
         class="elevation-1"
     >

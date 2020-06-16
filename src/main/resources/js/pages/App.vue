@@ -33,7 +33,7 @@
             <v-btn text
                    :disabled="$route.path === '/vacations'"
                    @click="showVacationList">
-              Employee List
+              Vacation List
             </v-btn>
           </v-list-item-title>
         </v-list>

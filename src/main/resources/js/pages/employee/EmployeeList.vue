@@ -1,78 +1,92 @@
 <template>
-  <v-data-table
-      :headers="headers"
-      :items="employeeList"
-      sort-by="username"
-      mobile-breakpoint="800"
-      class="elevation-1"
-  >
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-icon
-          small
-          @click="deleteEmployee(item)"
-      >
-        mdi-delete
-      </v-icon>
-    </template>
-    <template v-slot:item.username="{item}">
-      <v-btn color="blue darken-1" text @click="showEmployeeForm(item.id)">{{item.username}}</v-btn>
-    </template>
-    <template v-slot:top>
-      <v-toolbar flat color="white">
-        <v-toolbar-title>Employee List</v-toolbar-title>
-        <v-divider
-            class="mx-4"
-            inset
-            vertical
-        ></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="500px">
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">New employee</v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
+  <v-card>
+    <v-card-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+      ></v-text-field>
+    </v-card-title>
+    <v-data-table
+        :headers="headers"
+        :items="employeeList"
+        :search="search"
+        sort-by="username"
+        mobile-breakpoint="800"
+        class="elevation-1"
+    >
+      <template v-slot:item.actions="{ item }">
+        <v-icon
+            small
+            class="mr-2"
+            @click="editItem(item)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+            small
+            @click="deleteEmployee(item)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+      <template v-slot:item.username="{item}">
+        <v-btn color="blue darken-1" text @click="showEmployeeForm(item.id)">{{item.username}}</v-btn>
+      </template>
+      <template v-slot:top>
+        <v-toolbar flat color="white">
+          <v-toolbar-title>Employee List</v-toolbar-title>
+          <v-divider
+              class="mx-4"
+              inset
+              vertical
+          ></v-divider>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on }">
+              <v-btn color="primary" dark class="mb-2" v-on="on">New employee</v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">{{ formTitle }}</span>
+              </v-card-title>
 
-            <v-card-text>
-              <v-row>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.username" label="Employee name"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.birthday" label="Birthday" placeholder="DD.MM.YYYY"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.personnelNumber" label="Personnel Number"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.post" label="Post"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editedItem.startDate" label="Work Start Date"
-                                placeholder="DD.MM.YYYY"></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card-text>
+              <v-card-text>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.username" label="Employee name"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.birthday" label="Birthday"
+                                  placeholder="DD.MM.YYYY"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.personnelNumber" label="Personnel Number"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.post" label="Post"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.startDate" label="Work Start Date"
+                                  placeholder="DD.MM.YYYY"></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-card-text>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="save(editedItem)">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-  </v-data-table>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                <v-btn color="blue darken-1" text @click="save(editedItem)">Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 
 <script>
@@ -84,9 +98,10 @@
     data() {
 
       return {
+        search: '',
         dialog: false,
         headers: [
-          {text: 'Employee name', value: 'username' },
+          {text: 'Employee name', value: 'username'},
           {text: 'Birthday', value: 'birthday'},
           {text: 'Personnel Number', value: 'personnelNumber'},
           {text: 'Post', value: 'post'},
