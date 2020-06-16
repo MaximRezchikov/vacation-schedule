@@ -11,6 +11,8 @@ import static com.mr13.vacationschedule.core.constants.StringConstants.TIME_FORM
 @Data
 public class VacationForm {
 
+  private Long employeeId;
+
   @NotNull
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
   private LocalDate startVacation;

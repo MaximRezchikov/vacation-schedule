@@ -55,11 +55,11 @@ public class VacationController {
     return vacationService.getVacationsByEmployeeId(employeeId);
   }
 
-  @PostMapping("/{id}")
+  @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
-  public VacationView saveVacation(@PathVariable("id") Long employeeId, @Valid @RequestBody VacationForm vacationForm) {
+  public VacationView saveVacation(@Valid @RequestBody VacationForm vacationForm) {
 
-    Vacation vacation = vacationService.save(employeeId, vacationForm);
+    Vacation vacation = vacationService.save(vacationForm);
 
     return converter.convert(vacation, VacationView.class);
   }

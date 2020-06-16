@@ -20,13 +20,14 @@ public class VacationServiceImpl implements VacationService {
 
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public Vacation save(Long emploeeId, VacationForm vacationForm) {
+  public Vacation save(VacationForm vacationForm) {
 
+    Long employeeId = vacationForm.getEmployeeId();
     LocalDate startVacation = vacationForm.getStartVacation();
     LocalDate endVacation = vacationForm.getEndVacation();
 
     Vacation vacation = Vacation.builder()
-        .employeeId(emploeeId)
+        .employeeId(employeeId)
         .startVacation(startVacation)
         .endVacation(endVacation)
         .build();
@@ -57,7 +58,8 @@ public class VacationServiceImpl implements VacationService {
       vacationToUpdate.setEndVacation(endVacation);
 
       return vacationRepository.save(vacationToUpdate);
-    } else {
+    }
+    else {
       throw new NotFoundException();
     }
   }

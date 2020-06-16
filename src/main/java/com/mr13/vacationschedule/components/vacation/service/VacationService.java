@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface VacationService {
 
-  Vacation save(Long employeeId, VacationForm vacationForm);
+  Vacation save(VacationForm vacationForm);
 
   Vacation getOne(Long vacationId);
 

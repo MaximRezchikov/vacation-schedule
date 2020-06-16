@@ -94,10 +94,8 @@
         id: this.$route.params.id,
         vacations: [],
         vacationList: [],
-        defaultItem: {
-        },
-        editedItem: {
-        },
+        defaultItem: {},
+        editedItem: {},
       }
     },
 
@@ -157,7 +155,8 @@
           location.reload();
         } else {
           let employeeId = this.id;
-          axios.post('http://localhost:8080/employee/' + employeeId + '/vacation', {
+          axios.post('http://localhost:8080/vacation', {
+            employeeId: this.id,
             startVacation: this.editedItem.startVacation,
             endVacation: this.editedItem.endVacation,
           }).then(result => {

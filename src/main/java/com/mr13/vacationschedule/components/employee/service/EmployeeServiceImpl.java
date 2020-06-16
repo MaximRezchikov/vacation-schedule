@@ -3,8 +3,6 @@ package com.mr13.vacationschedule.components.employee.service;
 import com.mr13.vacationschedule.components.employee.domain.Employee;
 import com.mr13.vacationschedule.components.employee.dto.EmployeeForm;
 import com.mr13.vacationschedule.components.employee.repo.EmployeeRepository;
-import com.mr13.vacationschedule.components.vacation.domain.Vacation;
-import com.mr13.vacationschedule.components.vacation.dto.VacationForm;
 import com.mr13.vacationschedule.components.vacation.service.VacationService;
 import com.mr13.vacationschedule.core.errors.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -88,15 +86,5 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Transactional
   public void delete(Long employeeId) {
     employeeRepository.deleteById(employeeId);
-  }
-
-  @Override
-  @Transactional
-  public void addVacationToEmployee(Long employeeId, VacationForm vacationForm) {
-    Employee employee = getOne(employeeId);
-
-    Vacation vacation = vacationService.save(employeeId, vacationForm);
-    employee.addVacation(vacation);
-    employeeRepository.save(employee);
   }
 }
