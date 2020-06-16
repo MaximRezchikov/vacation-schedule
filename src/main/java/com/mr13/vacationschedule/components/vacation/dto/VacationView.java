@@ -1,7 +1,6 @@
 package com.mr13.vacationschedule.components.vacation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mr13.vacationschedule.components.employee.dto.EmployeeView;
 import com.mr13.vacationschedule.core.view.MainView;
 import lombok.Data;
 
@@ -11,6 +10,8 @@ import static com.mr13.vacationschedule.core.constants.StringConstants.TIME_FORM
 
 @Data
 public class VacationView extends MainView {
+
+  private Long employeeId;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = TIME_FORMAT)
   private LocalDate startVacation;

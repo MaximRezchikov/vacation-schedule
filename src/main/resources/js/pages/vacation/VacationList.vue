@@ -71,7 +71,7 @@
       return {
         dialog: false,
         headers: [
-          {text: 'Employee name', value: ''},
+          {text: 'Employee id', value: 'employeeId'},
           {text: 'Start date', value: 'startVacation'},
           {text: 'End date', value: 'endVacation'},
         ],
@@ -79,12 +79,11 @@
         vacationList: [],
         defaultItem: {},
         editedItem: {},
-        employee:{}
       }
     },
 
     mounted() {
-      this.getVacationList()
+      this.getVacationList();
     },
 
     methods: {
@@ -98,10 +97,10 @@
         });
       },
 
-      getEmployee() {
-        axios.get('http://localhost:8080/employee' + id)
+      getEmployee(id) {
+        axios.get('http://localhost:8080/employee/' + id)
         .then(result => {
-          this.employee = result.data
+          this.employees = result.data
         }, error => {
           console.error(error);
         });
