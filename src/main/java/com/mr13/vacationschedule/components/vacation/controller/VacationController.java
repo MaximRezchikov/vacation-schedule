@@ -1,6 +1,7 @@
 package com.mr13.vacationschedule.components.vacation.controller;
 
 import com.mr13.vacationschedule.components.vacation.domain.Vacation;
+import com.mr13.vacationschedule.components.vacation.dto.EmployeeVacationView;
 import com.mr13.vacationschedule.components.vacation.dto.VacationForm;
 import com.mr13.vacationschedule.components.vacation.dto.VacationView;
 import com.mr13.vacationschedule.components.vacation.service.VacationService;
@@ -47,6 +48,16 @@ public class VacationController {
 
     return vacationList.stream()
         .map(vacation -> converter.convert(vacation, VacationView.class))
+        .collect(Collectors.toList());
+  }
+
+  @GetMapping("/employeeVacation")
+  public List<EmployeeVacationView> getAllEmployeeVacation() {
+
+    List<Vacation> vacationList = vacationService.getAll();
+
+    return vacationList.stream()
+        .map(vacation -> converter.convert(vacation, EmployeeVacationView.class))
         .collect(Collectors.toList());
   }
 

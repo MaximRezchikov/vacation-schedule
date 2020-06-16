@@ -2,6 +2,7 @@
   <v-data-table
       :headers="headers"
       :items="vacationList"
+      sort-by="employee.username"
       mobile-breakpoint="800"
       class="elevation-1"
   >
@@ -17,7 +18,7 @@
       </v-toolbar>
     </template>
     <template v-slot:item.vacationList="{item}">
-      {{getEmployees(item.employeeId)}}
+
     </template>
   </v-data-table>
 </template>
@@ -32,15 +33,11 @@
       return {
         dialog: false,
         headers: [
-          {text: 'Employee name', value: 'employees.username'},
+          {text: 'Employee name', value: 'employee.username'},
           {text: 'Start date', value: 'startVacation'},
           {text: 'End date', value: 'endVacation'},
         ],
-        editedIndex: -1,
         vacationList: [],
-        defaultItem: {},
-        editedItem: {},
-        employees:[]
       }
     },
 
@@ -51,29 +48,12 @@
     methods: {
 
       getVacationList() {
-        axios.get('http://localhost:8080/vacation')
+        axios.get('http://localhost:8080/vacation/employeeVacation')
         .then(result => {
           this.vacationList = result.data
         }, error => {
           console.error(error);
         });
-      },
-
-      getEmployees(id) {
-        axios.get('http://localhost:8080/employee/' + id)
-        .then(result => {
-          this.employees = result.data
-        }, error => {
-          console.error(error);
-        });
-      },
-
-      close() {
-        this.dialog = false;
-        setTimeout(() => {
-          this.editedItem = Object.assign({}, this.defaultItem);
-          this.editedIndex = -1
-        }, 300)
       },
     }
   }
