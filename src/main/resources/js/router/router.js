@@ -4,6 +4,8 @@ import Hello from 'pages/Hello.vue'
 import EmployeeList from 'pages/employee/EmployeeList.vue'
 import VacationList from 'pages/vacation/VacationList.vue'
 import EmployeeCard from 'pages/employee/EmployeeCard.vue'
+import DateFormat from 'pages/components/DateFormat.vue'
+
 
 Vue.use(VueRouter);
 
@@ -12,6 +14,7 @@ const routes = [
   {path: '/employees', component: EmployeeList},
   {path: '/employeeCard/:id', component: EmployeeCard},
   {path: '/vacations', component: VacationList},
+  {path: '/date', component: DateFormat},
 ];
 
 export default new VueRouter({

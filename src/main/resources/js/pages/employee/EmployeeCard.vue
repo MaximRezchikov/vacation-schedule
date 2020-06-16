@@ -133,6 +133,7 @@
           axios.delete('http://localhost:8080/vacation/' + item.id, {
             id: this.vacations.id
           });
+          location.reload();
         }
       },
 

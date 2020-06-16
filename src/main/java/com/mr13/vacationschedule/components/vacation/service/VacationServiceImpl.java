@@ -3,6 +3,7 @@ package com.mr13.vacationschedule.components.vacation.service;
 import com.mr13.vacationschedule.components.vacation.domain.Vacation;
 import com.mr13.vacationschedule.components.vacation.dto.VacationForm;
 import com.mr13.vacationschedule.components.vacation.repo.VacationRepository;
+import com.mr13.vacationschedule.core.errors.DatePeriodException;
 import com.mr13.vacationschedule.core.errors.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Service
@@ -26,14 +28,23 @@ public class VacationServiceImpl implements VacationService {
     LocalDate startVacation = vacationForm.getStartVacation();
     LocalDate endVacation = vacationForm.getEndVacation();
 
-    Vacation vacation = Vacation.builder()
-        .employeeId(employeeId)
-        .startVacation(startVacation)
-        .endVacation(endVacation)
-        .build();
+    int periodDays = getPeriodDays(startVacation, endVacation);
 
-    return vacationRepository.save(vacation);
+    if (periodDays > 0) {
+      Vacation vacation = Vacation.builder()
+          .employeeId(employeeId)
+          .startVacation(startVacation)
+          .endVacation(endVacation)
+          .build();
+
+      return vacationRepository.save(vacation);
+    }
+    else {
+      throw new DatePeriodException("Check the correctness of the entered data");
+    }
   }
+
+
 
   @Override
   @Transactional
@@ -50,14 +61,20 @@ public class VacationServiceImpl implements VacationService {
     LocalDate endVacation = vacationForm.getEndVacation();
 
     boolean exists = vacationRepository.existsById(vacationId);
+    int periodDays = getPeriodDays(startVacation, endVacation);
 
     if (exists) {
-      Vacation vacationToUpdate = getOne(vacationId);
+      if (periodDays > 0) {
+        Vacation vacationToUpdate = getOne(vacationId);
 
-      vacationToUpdate.setStartVacation(startVacation);
-      vacationToUpdate.setEndVacation(endVacation);
+        vacationToUpdate.setStartVacation(startVacation);
+        vacationToUpdate.setEndVacation(endVacation);
 
-      return vacationRepository.save(vacationToUpdate);
+        return vacationRepository.save(vacationToUpdate);
+      }
+      else {
+        throw new DatePeriodException("Check the correctness of the entered data");
+      }
     }
     else {
       throw new NotFoundException();
@@ -80,5 +97,11 @@ public class VacationServiceImpl implements VacationService {
   @Transactional
   public void delete(Long vacationId) {
     vacationRepository.deleteById(vacationId);
+  }
+
+  private int getPeriodDays(LocalDate startVacation, LocalDate endVacation) {
+
+    Period period = Period.between(startVacation, endVacation);
+    return period.getDays();
   }
 }
