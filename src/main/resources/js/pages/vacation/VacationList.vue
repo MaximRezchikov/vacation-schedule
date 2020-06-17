@@ -1,7 +1,9 @@
 <template>
   <v-card>
     <v-card-title>
-      <v-btn color="blue darken-1" text @click="downloadExcelVacationReport" data-marker="download-projects-excel">Excel Report</v-btn>
+      <v-btn color="blue darken-1" text @click="downloadExcelVacationReport" data-marker="download-projects-excel">Excel
+        Report
+      </v-btn>
       <v-spacer></v-spacer>
     </v-card-title>
     <v-data-table
@@ -72,13 +74,30 @@
 
       downloadExcelVacationReport() {
         this.getIds();
-        axios.post('http://localhost:8080/report/vacation/vacationExcel', {
-          vacationIds: this.vacationIds,
-          columnTitles: ['Employee name', 'Start date', 'End date', 'Remaining period'],
+        let method = 'post';
+        axios({
+          url: 'http://localhost:8080/report/vacation/vacationExcel',
+          method: 'POST',
+          responseType: 'blob',
+          data: {
+            vacationIds: this.vacationIds,
+            columnTitles: ['Employee name', 'Start date', 'End date', 'Remaining period'],
+          }
+
         })
         .then(response => {
-          this.vacationIds.length = 0
-        })
+              const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
+              const link = document.createElement('a');
+              link.href = downloadUrl;
+              link.setAttribute('download', 'VacationReport.xlsx');
+              document.body.appendChild(link);
+              link.click();
+              link.remove();
+              this.vacationIds.length = 0
+            },
+            error => {
+              console.error(error);
+            });
       }
     }
   }

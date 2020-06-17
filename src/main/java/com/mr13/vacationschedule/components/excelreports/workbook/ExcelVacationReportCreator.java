@@ -35,6 +35,8 @@ import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORM
 @RequiredArgsConstructor
 public class ExcelVacationReportCreator {
 
+  //TODO refactoring
+
   private final VacationService vacationService;
   private XSSFWorkbook workbook;
   private XSSFSheet sheet;
@@ -53,17 +55,9 @@ public class ExcelVacationReportCreator {
 
   private byte[] generateXls(XSSFWorkbook workbook) {
 
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
-    String currentDateTime = LocalDateTime.now().format(dateTimeFormatter);
-
-    File file = new File("C:/file_" + currentDateTime + ".xlsx");
-    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-
+    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
       workbook.write(outputStream);
-      byte[] bytes = outputStream.toByteArray();
-      fileOutputStream.write(bytes);
-      return bytes;
+      return outputStream.toByteArray();
     } catch (IOException e) {
       throw new ExcelReportException("Something went wrong");
     }
