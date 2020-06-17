@@ -57,21 +57,48 @@
               <v-card-text>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.username" label="Employee name"></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.username"
+                        label="Employee name"
+                        :rules="[v => !!v || 'Employee is required']"
+                        required
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.birthday" label="Birthday"
-                                  placeholder="DD.MM.YYYY"></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.birthday"
+                        label="Birthday"
+                        placeholder="DD.MM.YYYY"
+                        :rules="[v => !!v || 'Birthday is required',
+                        v => /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(v) || 'Birthday must be valid']"
+                        required
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.personnelNumber" label="Personnel Number"></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.personnelNumber"
+                        label="Personnel Number"
+                        :rules="[v => !!v || 'Personnel Number is required']"
+                        required
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.post" label="Post"></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.post"
+                        label="Post"
+                        :rules="[v => !!v || 'Post is required']"
+                        required
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.startDate" label="Work Start Date"
-                                  placeholder="DD.MM.YYYY"></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.startDate"
+                        label="Work Start Date"
+                        placeholder="DD.MM.YYYY"
+                        :rules="[v => !!v || 'Work Start Date is required',
+                        v => /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(v) || 'Work Start Date must be valid']"
+                        required
+                    ></v-text-field>
                   </v-col>
                 </v-row>
               </v-card-text>

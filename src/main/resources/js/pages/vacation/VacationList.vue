@@ -1,9 +1,14 @@
 <template>
   <v-card>
     <v-card-title>
-      <v-btn color="blue darken-1" text @click="downloadExcelVacationReport" data-marker="download-projects-excel">Excel
-        Report
+      <v-btn
+          color="blue darken-1"
+          text
+          @click="downloadExcelVacationReport"
+          data-marker="download-projects-excel">Excel Report
       </v-btn>
+      <v-spacer></v-spacer>
+      Remaining vacation period you can find in the excel report
       <v-spacer></v-spacer>
     </v-card-title>
     <v-data-table

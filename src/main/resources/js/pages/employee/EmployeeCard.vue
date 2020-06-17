@@ -53,12 +53,26 @@
               <v-card-text>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.startVacation" label="Start date"
-                                  placeholder="DD.MM.YYYY"></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.startVacation"
+                        label="Start date"
+                        placeholder="DD.MM.YYYY"
+                        :rules="[v => !!v || 'Start date is required',
+                        v => /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(v) || 'Start date must be valid']"
+                        required
+                    >
+                    </v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.endVacation" label="End date"
-                                  placeholder="DD.MM.YYYY"></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.endVacation"
+                        label="End date"
+                        placeholder="DD.MM.YYYY"
+                        :rules="[v => !!v || 'End date is required',
+                        v => /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(v) || 'End date must be valid']"
+                        required
+                    >
+                    </v-text-field>
                   </v-col>
                 </v-row>
               </v-card-text>

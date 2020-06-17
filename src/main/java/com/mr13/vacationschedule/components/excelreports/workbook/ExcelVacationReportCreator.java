@@ -19,16 +19,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_TIME_FORMAT;
 import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORMAT;
 
 @Component
