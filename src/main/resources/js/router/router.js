@@ -15,6 +15,7 @@ const routes = [
   {path: '/employeeCard/:id', component: EmployeeCard},
   {path: '/vacations', component: VacationList},
   {path: '/date', component: DateFormat},
+  { path: '*', redirect: '/hello' }
 ];
 
 export default new VueRouter({

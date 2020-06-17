@@ -6,6 +6,8 @@ import com.mr13.vacationschedule.components.employee.repo.EmployeeRepository;
 import com.mr13.vacationschedule.components.vacation.service.VacationService;
 import com.mr13.vacationschedule.core.errors.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +76,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     else {
       throw new NotFoundException();
     }
+  }
+
+  @Override
+  public Employee findByLogin(String login) {
+    return employeeRepository.findByLogin(login);
   }
 
   @Override

@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Set;
 
 import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORMAT;
@@ -32,7 +35,7 @@ import static com.mr13.vacationschedule.core.constants.StringConstants.DATE_FORM
 @AllArgsConstructor
 @ToString(of = "username")
 @EqualsAndHashCode(of = {"id"})
-public class Employee {
+public class Employee implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,12 +63,36 @@ public class Employee {
 
   private String password;
 
-  //@JsonIgnore
   @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<Vacation> vacations;
 
   @JsonIgnore
   public boolean addVacation(Vacation vacation) {
     return vacations.add(vacation);
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return null;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 }

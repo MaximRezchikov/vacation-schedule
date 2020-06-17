@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    Hello page
+    Vacation application
   </v-container>
 </template>
 
