@@ -190,6 +190,11 @@ public class ExcelVacationReportCreator {
 
     cell = newRow.createCell(header, CellType.NUMERIC);
     cell.setCellStyle(createStyleForCells(workbook));
-    cell.setCellValue(days);
+
+    if (days > 0) {
+      cell.setCellValue(days);
+    } else {
+      cell.setCellValue(0);
+    }
   }
 }
