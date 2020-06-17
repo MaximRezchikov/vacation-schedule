@@ -9,4 +9,6 @@ public interface EmployeeService extends CrudService<Employee> {
   Employee save(EmployeeForm employeeForm);
 
   Employee update(Long employeeId, EmployeeForm employeeForm);
+
+  Employee findByLogin(String login);
 }
