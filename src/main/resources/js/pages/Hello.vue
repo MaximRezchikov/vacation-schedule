@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    Vacation application
+    Vacation application.
+    Push to '⋮'
   </v-container>
 </template>
 
